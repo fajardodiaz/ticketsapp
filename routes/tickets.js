@@ -1,6 +1,6 @@
-var express = require('express');
+const express = require('express');
 const { getTickets } = require('../controllers/ticketsController');
-var router = express.Router();
+const router = express.Router();
 
 /* GET tickets page. */
 router.get('/', getTickets);
