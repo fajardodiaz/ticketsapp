@@ -1,12 +1,47 @@
-const { Sequelize, DataTypes } = require("sequelize/types");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../database/db");
 
-const Client = sequelize.define('Client',{
-    id:{
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey:true
+const Area = sequelize.define('Area',{
+    name:{
+        type: DataTypes.STRING(75),
+        allowNull:false
+    }
+},{
+    tableName: 'areas'
+});
+
+const Company = sequelize.define('Company',{
+    name:{
+        type: DataTypes.STRING(75),
+        allowNull:false
     },
+    no_employees:{
+        type: DataTypes.INTEGER,
+    },
+    area_id:{
+        type: DataTypes.INTEGER,
+        allowNull:true,
+        references:{
+            model: Area,
+            key:"id",
+        }
+    }
+},{
+    tableName: 'companies'
+});
+
+
+const Position = sequelize.define('Position',{
+    name:{
+        type: DataTypes.STRING(75),
+        allowNull:false
+    }
+},{
+    tableName: 'positions'
+});
+
+
+const Client = sequelize.define('Client',{
     firstname:{
         type: DataTypes.STRING(75),
         allowNull:false
@@ -16,82 +51,40 @@ const Client = sequelize.define('Client',{
     },
     email:{
         type: DataTypes.STRING(75),
-        allowNull:false
+        allowNull:false,
+        unique:true
     },
-    company:{
+    company_id:{
         type: DataTypes.INTEGER,
         allowNull:true,
-        defaultValue: 1
+        references:{
+            model: Company,
+            key:"id",
+        }
     },
-    position:{
+    position_id:{
         type: DataTypes.INTEGER,
-        allowNull:true
+        allowNull:true,
+        references:{
+            model: Position,
+            key:"id",
+        }
     },
-    ID:{
+    UniqueID:{
         type: DataTypes.STRING(25),
         unique: true,
         allowNull:false
-    }
+    },
 },{
     tableName: 'clients'
 });
 
-const Company = sequelize.define('Company',{
-    id:{
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey:true
-    },
-    name:{
-        type: DataTypes.STRING(75),
-        allowNull:false
-    },
-    no_employees:{
-        type: DataTypes.INTEGER,
-    },
-    area:{
-        type:{
-            type: DataTypes.INTEGER,
-        }
-    }
-});
-
-const Area = sequelize.define('Area',{
-    id:{
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey:true
-    },
-    name:{
-        type: DataTypes.STRING(75),
-        allowNull:false
-    }
-});
-
-const Position = sequelize.define('Position',{
-    id:{
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey:true
-    },
-    name:{
-        type: DataTypes.STRING(75),
-        allowNull:false
-    }
-});
+sequelize.sync();
 
 
-const createTables = async ()=>{
-    try {
-        await Client.sync();
-        await Company.sync();
-        await Area.sync();
-        await Position.sync();
-        
-        console.log("The tables was created succesfully");
-    } catch (error) {
-        console.log(error);
-    };
-}
-
-createTables();
+module.exports = {
+    Client,
+    Company,
+    Area,
+    Position,
+};
