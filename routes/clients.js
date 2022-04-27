@@ -1,5 +1,6 @@
 var express = require('express');
-const {createPosition, getPositions, getPositionById, updatePosition, deletePosition, createManyPositions } = require('../controllers/client/positionController')
+const { getAreas, getAreaById, createArea, updateArea, deleteArea } = require('../controllers/client/areaController');
+const {createPosition, getPositions, getPositionById, updatePosition, deletePosition } = require('../controllers/client/positionController')
 const router = express.Router();
 
 /* GET clients */
@@ -9,8 +10,14 @@ const router = express.Router();
 router.get('/positions', getPositions);
 router.get('/positions/:id', getPositionById);
 router.post('/positions', createPosition);
-router.post('/positions/many', createManyPositions);
 router.put('/positions/:id', updatePosition);
 router.delete('/positions/:id', deletePosition);
+
+/** Areas */
+router.get('/areas', getAreas);
+router.get('/areas/:id', getAreaById);
+router.post('/areas', createArea);
+router.put('/areas/:id', updateArea);
+router.delete('/areas/:id', deleteArea);
 
 module.exports = router;
