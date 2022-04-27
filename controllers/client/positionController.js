@@ -16,8 +16,8 @@ exports.getPositions = async (req, res) => {
         res.json({
             "message": error
         });
-    }
-}
+    };
+};
 
 //Get a Position By ID
 exports.getPositionById = async (req, res) => {
@@ -28,20 +28,19 @@ exports.getPositionById = async (req, res) => {
         }else{
             res.status(404);
             res.json({"message":"Position Not Found"});
-        }
+        };
 
     } catch (error) {
         res.json({
             "error": error
         });
-    }
-}
+    };
+};
 
 //Create One/Many Positions
 exports.createPosition = async (req, res) => {
     try {
         let data = req.body;
-        console.log(data.length);
 
         //If data.length > 1 means that we send an array to create many positions in a single post request
         if(data.length > 1){
@@ -54,14 +53,14 @@ exports.createPosition = async (req, res) => {
             res.json({
                 "message": "Position Created Succesfully"
             });
-        }
+        };
 
     } catch (error) {
         res.json({
             "message": error
         });
-    }
-}
+    };
+};
 
 
 //Update a Position
@@ -79,12 +78,11 @@ exports.updatePosition = async (req, res) => {
             "message": "Position updated Succesfully"
         });
     } catch (error) {
-        console.log(error)
         res.json({
             "error": error
-        })
-    }
-}
+        });
+    };
+};
 
 //Delete a Position
 exports.deletePosition = async (req, res) => {
@@ -98,6 +96,6 @@ exports.deletePosition = async (req, res) => {
     } catch (error) {
         res.json({
             "error": error
-        })
-    }
-}
+        });
+    };
+};

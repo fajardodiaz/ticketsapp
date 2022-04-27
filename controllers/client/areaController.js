@@ -16,8 +16,8 @@ exports.getAreas = async (req, res) => {
         res.json({
             "message": error
         });
-    }
-}
+    };
+};
 
 //Get an Area By ID
 exports.getAreaById = async (req, res) => {
@@ -28,14 +28,14 @@ exports.getAreaById = async (req, res) => {
         }else{
             res.status(404);
             res.json({"message":"Position Not Found"});
-        }
+        };
 
     } catch (error) {
         res.json({
             "message": error
         });
-    }
-}
+    };
+};
 
 //Create One/Many Areas
 exports.createArea = async (req, res) => {
@@ -47,7 +47,7 @@ exports.createArea = async (req, res) => {
             await Area.bulkCreate(data);
             res.json({
                 "message": "Areas created succesfully"
-            })
+            });
         } else {
             await Area.create({
                 name: req.body.name
@@ -55,14 +55,14 @@ exports.createArea = async (req, res) => {
             res.json({
                 "message": "Area Created Succesfully"
             });
-        }
+        };
 
     } catch (error) {
         res.json({
             "message": error
         });
-    }
-}
+    };
+};
 
 
 //Update an Area
@@ -80,12 +80,11 @@ exports.updateArea = async (req, res) => {
             "message": "Area updated Succesfully"
         });
     } catch (error) {
-        console.log(error)
         res.json({
             "error": error
-        })
-    }
-}
+        });
+    };
+};
 
 //Delete an Position
 exports.deleteArea = async (req, res) => {
@@ -101,6 +100,6 @@ exports.deleteArea = async (req, res) => {
     } catch (error) {
         res.json({
             "error": error
-        })
-    }
-}
+        });
+    };
+};
