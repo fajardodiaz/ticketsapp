@@ -4,6 +4,8 @@ const {
 
 
 // Position Operations
+
+//Get All Positions
 exports.getPositions = async (req, res) => {
     try {
         const positions = await Position.findAll();
@@ -15,6 +17,7 @@ exports.getPositions = async (req, res) => {
     }
 }
 
+//Get a Position By ID
 exports.getPositionById = async (req, res) => {
     try {
         const position = await Position.findAll({
@@ -31,14 +34,25 @@ exports.getPositionById = async (req, res) => {
     }
 }
 
+//Create One/Many Positions
 exports.createPosition = async (req, res) => {
     try {
-        await Position.create({
-            name: req.body.name
-        });
-        res.json({
-            "message": "Position Created Succesfully"
-        });
+        let data = req.body;
+        console.log(data.length);
+
+        //If data.length > 1 means that we send an array to create many positions in a single post request
+        if(data.length > 1){
+            await Position.bulkCreate(data);
+            res.json({"message":"Positions created succesfully"})
+        }else{
+            await Position.create({
+                name: req.body.name
+            });
+            res.json({
+                "message": "Position Created Succesfully"
+            });
+        }
+
     } catch (error) {
         res.json({
             "message": error
@@ -46,18 +60,8 @@ exports.createPosition = async (req, res) => {
     }
 }
 
-exports.createManyPositions = async (req, res) => {
-    try {
-        let data = req.body;
-        await Position.bulkCreate(data);
-        res.json({"message":"Positions created succesfully"})
-    } catch (error) {
-        res.json({
-            "error": error
-        });
-    }
-}
 
+//Update a Position
 exports.updatePosition = async (req, res) => {
     try {
         const updatePos = await Position.update({
@@ -79,6 +83,7 @@ exports.updatePosition = async (req, res) => {
     }
 }
 
+//Delete a Position
 exports.deletePosition = async (req, res) => {
     try {
         const deletePos = await Position.destroy({ where:{
