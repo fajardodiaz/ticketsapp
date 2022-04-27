@@ -8,7 +8,9 @@ const {
 //Get All Positions
 exports.getPositions = async (req, res) => {
     try {
-        const positions = await Position.findAll();
+        const positions = await Position.findAll({
+            order: [["name","ASC"]]
+        });
         res.json(positions);
     } catch (error) {
         res.json({
@@ -20,16 +22,17 @@ exports.getPositions = async (req, res) => {
 //Get a Position By ID
 exports.getPositionById = async (req, res) => {
     try {
-        const position = await Position.findAll({
-            where: {
-                id: req.params.id
-            }
-        })
-        res.json(position);
+        const position = await Position.findByPk(req.params.id);
+        if (position != null){
+            res.json(position);
+        }else{
+            res.status(404);
+            res.json({"message":"Position Not Found"});
+        }
 
     } catch (error) {
         res.json({
-            "message": error
+            "error": error
         });
     }
 }

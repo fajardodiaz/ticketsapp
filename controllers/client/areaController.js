@@ -8,7 +8,9 @@ const {
 //Get All Areas
 exports.getAreas = async (req, res) => {
     try {
-        const areas = await Area.findAll();
+        const areas = await Area.findAll({
+            order: [["name","ASC"]]
+        });
         res.json(areas);
     } catch (error) {
         res.json({
@@ -20,12 +22,13 @@ exports.getAreas = async (req, res) => {
 //Get an Area By ID
 exports.getAreaById = async (req, res) => {
     try {
-        const area = await Area.findAll({
-            where: {
-                id: req.params.id
-            }
-        })
-        res.json(position);
+        const area = await Area.findByPk(req.params.id);
+        if (area != null){
+            res.json(area);
+        }else{
+            res.status(404);
+            res.json({"message":"Position Not Found"});
+        }
 
     } catch (error) {
         res.json({
