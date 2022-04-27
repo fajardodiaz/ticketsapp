@@ -79,7 +79,8 @@ const Client = sequelize.define('Client',{
     tableName: 'clients'
 });
 
-sequelize.sync();
+//This method going to create the tables if not exist
+// sequelize.sync();
 
 
 module.exports = {
