@@ -80,7 +80,7 @@ const Client = sequelize.define('Client',{
 });
 
 //This method going to create the tables if not exist
-// sequelize.sync();
+sequelize.sync();
 
 
 module.exports = {

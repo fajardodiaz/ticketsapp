@@ -9,7 +9,7 @@ const database = process.env.DB_DATABASE;
 
 const sequelize = new Sequelize(database, username, password, {
     host: host,
-    dialect:'mysql'
+    dialect:'postgres'
 });
 
 module.exports = sequelize;
